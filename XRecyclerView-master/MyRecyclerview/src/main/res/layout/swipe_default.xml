@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="#ffffff"
+        android:id="@+id/bottom_wrapper"
+        android:layout_width="wrap_content"
+        android:weightSum="1"
+        android:layout_height="match_parent">
+        <View
+            android:id="@+id/swipe_delete"
+            android:background="#FF1300"
+            android:gravity="center"
+            android:layout_weight="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>

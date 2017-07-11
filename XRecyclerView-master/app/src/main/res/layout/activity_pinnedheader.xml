@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+   <EditText
+       android:id="@+id/et_search"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:hint="请输入关键字"
+       />
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/et_search"
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <com.yanxuwen.PinnedHeader.IndexBar.widget.IndexBar
+        android:id="@+id/indexBar"
+        android:layout_width="24dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="150dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        app:indexBarPressBackground="#00000000"
+        app:textColor="#3388FF"
+        app:indexBarTextSize="12sp"/>
+
+    <TextView
+        android:id="@+id/tvSideBarHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="80dp"
+        android:minHeight="80dp"
+        android:layout_gravity="center"
+        android:background="@drawable/shape_side_bar_bg"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:textColor="@android:color/white"
+        android:textSize="48sp"
+        android:visibility="gone"
+        android:padding="10dp"
+        tools:text="A"
+        tools:visibility="visible"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:onClick="updateDatas"
+        android:layout_alignParentBottom="true"
+        android:text="更新数据源"/>
+
+</RelativeLayout>

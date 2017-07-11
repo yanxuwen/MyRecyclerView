@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<com.yanxuwen.expandable.ExpandableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/expandable_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:el_duration="300"
+    app:el_expanded="false">
+<com.yanxuwen.swipelibrary.SwipeLayout
+    android:id="@+id/layout_swipelayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+</com.yanxuwen.swipelibrary.SwipeLayout>
+   <RelativeLayout
+       android:id="@+id/layout_expandable"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_expandable="true"
+       >
+
+       </RelativeLayout>
+
+</com.yanxuwen.expandable.ExpandableLinearLayout>
