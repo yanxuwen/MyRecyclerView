@@ -567,8 +567,14 @@ public class MyRecyclerView extends RecyclerView {
                 gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                     @Override
                     public int getSpanSize(int position) {
-                        return (isHeader(position)||  isFooter(position))
-                                ? gridManager.getSpanCount() : 1;
+                        if(mAdapter instanceof MyBaseAdapter){
+                            return (isHeader(position)||  isFooter(position))
+                                    ? gridManager.getSpanCount() : (((MyBaseAdapter) mAdapter).getSpanCount(position-mHeaderViews.size()));
+                        }else{
+                            return (isHeader(position)||  isFooter(position))
+                                    ? gridManager.getSpanCount() : 1;
+                        }
+
                     }
                 });
             }

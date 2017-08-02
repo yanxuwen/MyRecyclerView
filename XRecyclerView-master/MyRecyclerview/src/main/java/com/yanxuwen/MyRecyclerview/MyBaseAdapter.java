@@ -132,7 +132,13 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
         this.expand_position=expand_position;
     }
 
-
+    /**
+     * 用于格子视图占据多少数量【用于设置不同规格布局】，
+     * 由于onAttachedToRecyclerView被占用，所以无法重写onAttachedToRecyclerView来设置格子视图占据多少数量。
+     */
+    public int getSpanCount(int position){
+        return 1;
+    }
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return null;
