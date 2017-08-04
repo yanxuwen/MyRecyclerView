@@ -246,6 +246,7 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
     }
 
     public  class BaseViewHolder extends RecyclerView.ViewHolder implements  View.OnFocusChangeListener{ //由于是lib工程，所以ButterKnife在这个类不管用
+        boolean isSwipe=true;
         SwipeLayout swipe;
         View expand;
         private ExpandableLinearLayout expandableLayout;
@@ -288,6 +289,9 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
             clickview.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
+                    if(!isSwipe){
+                        return false;
+                    }
                     if(swipe_layout!=0) {
                         swipe.setIsSwipe(true);
                     }
@@ -353,7 +357,10 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
         public SwipeLayout getSwipeView(){
             return  swipe;
         }
-
+        public void setIsSwipe(boolean isSwipe){
+            this.isSwipe=isSwipe;
+            getSwipeView().setIsSwipe(isSwipe);
+        }
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
             if (expandableLayout != null) {
