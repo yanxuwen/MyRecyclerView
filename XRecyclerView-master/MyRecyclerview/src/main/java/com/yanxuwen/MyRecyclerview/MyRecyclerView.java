@@ -177,6 +177,9 @@ public class MyRecyclerView extends RecyclerView {
     public int getHeaderViewsCount(){
         return mHeaderViews!=null?mHeaderViews.size():0;
     }
+    public int getFootersViewsCount(){
+        return mFootViews!=null?mFootViews.size():0;
+    }
     public void loadMoreComplete() {
         MyBaseAdapter baseadapter=(MyBaseAdapter)mAdapter;
         MyBaseAdapter.BaseViewHolder swipe_holder=baseadapter.swipe_holder;
@@ -354,10 +357,13 @@ public class MyRecyclerView extends RecyclerView {
             } else {
                 lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
             }
-            //注释部分暂时隐藏，该判断是，数组大小要大于当前可视的大小，才能加载，但是这样就造成。
+            //1.注释部分暂时隐藏，该判断是，数组大小要大于当前可视的大小，才能加载，但是这样就造成。
             //当前数组只有1个的时候就无法加载问题
+            //2、修改第二个判断，lastVisibleItemPosition为最后的可见视图的position,由于footview隐藏的话，就会少一个尾部position,所以就不会>=
+            //所以lastVisibleItemPosition要减去头部，layoutManager.getItemCount()要减去头部跟尾部，
+            //什么时候footview会隐藏呢，在设置没有更多的时候是，文字设置成""空的话，就会隐藏掉尾部分
             if (layoutManager.getChildCount() > 0
-                    && lastVisibleItemPosition >= layoutManager.getItemCount() - 1 && /** layoutManager.getItemCount() > layoutManager.getChildCount() && */!isnomore) {
+                    && lastVisibleItemPosition -getHeaderViewsCount()>= layoutManager.getItemCount() - 1 -getHeaderViewsCount()-getFootersViewsCount()&& /** layoutManager.getItemCount() > layoutManager.getChildCount() && */!isnomore) {
                if(mRefreshHeader==null||(mRefreshHeader!=null&& mRefreshHeader.getState() < BaseArrowRefreshHeader.STATE_REFRESHING)){
                    //如果是谷歌的下拉刷新，则在刷新的时候不能加载
                    if(!isGoogleRefresh||(isGoogleRefresh&&mSwipeRefreshLayout!=null&&!mSwipeRefreshLayout.isRefreshing())){
@@ -372,7 +378,7 @@ public class MyRecyclerView extends RecyclerView {
                        if(footView instanceof  LoadingMoreFooter) {
                            ( (LoadingMoreFooter) footView ).setState(LoadingMoreFooter.STATE_LOADING);
                            //防止一些没有滑动到最下面，影响美观，自动拉动到最下面
-                           smoothScrollBy(100,100);
+                           smoothScrollBy(500,500);
                        } else{
                            footView.setVisibility(View.VISIBLE);
                        }

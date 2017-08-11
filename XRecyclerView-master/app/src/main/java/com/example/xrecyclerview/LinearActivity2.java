@@ -162,7 +162,7 @@ public class LinearActivity2 extends AppCompatActivity implements MyRecyclerView
             new Handler().postDelayed(new Runnable() {
                 public void run() {
 
-                    mRecyclerView.noMoreLoading();
+                    mRecyclerView.noMoreLoading("");
                 }
             }, 2000);
         }

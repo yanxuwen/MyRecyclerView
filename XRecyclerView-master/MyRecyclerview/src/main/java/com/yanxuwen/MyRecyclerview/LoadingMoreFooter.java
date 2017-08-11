@@ -78,6 +78,7 @@ public class LoadingMoreFooter extends LinearLayout {
                 materialProgressView.setColorSchemeColors(new int[]{color});
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 lp.setMargins(0, DensityUtil.dip2px(this.getContext(),5),0, DensityUtil.dip2px(this.getContext(),3));
+                lp.gravity = Gravity.CENTER;
                 progressCon.setView(materialProgressView);
                 progressCon.setLayoutParams(lp);
             }else{
@@ -103,12 +104,22 @@ public class LoadingMoreFooter extends LinearLayout {
         switch(state) {
             case STATE_LOADING:
                 mText.setText(mContext.getText(R.string.listview_loading));
-                if(materialProgressView!=null){
-                    mText.setVisibility(View.GONE);
-                    materialProgressView.setVisibility(View.VISIBLE);
-                }
                 progressCon.setVisibility(View.VISIBLE);
                 this.setVisibility(View.VISIBLE);
+                if(materialProgressView!=null){
+                    mText.setVisibility(View.GONE);
+                    materialProgressView.setVisibility(View.INVISIBLE);
+                }else{
+                    mText.setVisibility(View.VISIBLE);
+                }
+                mText.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(materialProgressView!=null){
+                            materialProgressView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                },50);
                     break;
             case STATE_COMPLETE:
                 mText.setText(mContext.getText(R.string.listview_loading));
@@ -129,17 +140,16 @@ public class LoadingMoreFooter extends LinearLayout {
                     mText.setTextColor(mContext.getResources().getColor(text_color));
                 }
                 mText.setText(nomore);
-                if(!nomore.equals("")){
-                    mText.setVisibility(VISIBLE);
-                }else{
-                    mText.setVisibility(GONE);
-                }
 
                 progressCon.setVisibility(View.GONE);
                 this.setVisibility(View.VISIBLE);
                 if(materialProgressView!=null){
                     materialProgressView.setVisibility(View.GONE);
-                    mText.setVisibility(View.VISIBLE);
+                }
+                if(!nomore.equals("")){
+                    mText.setVisibility(VISIBLE);
+                }else{
+                    mText.setVisibility(GONE);
                 }
                 break;
         }
