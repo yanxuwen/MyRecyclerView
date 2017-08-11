@@ -129,6 +129,12 @@ public class LoadingMoreFooter extends LinearLayout {
                     mText.setTextColor(mContext.getResources().getColor(text_color));
                 }
                 mText.setText(nomore);
+                if(!nomore.equals("")){
+                    mText.setVisibility(VISIBLE);
+                }else{
+                    mText.setVisibility(GONE);
+                }
+
                 progressCon.setVisibility(View.GONE);
                 this.setVisibility(View.VISIBLE);
                 if(materialProgressView!=null){

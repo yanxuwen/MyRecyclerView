@@ -212,13 +212,14 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
     /**
      * 注意：
      * 传递为 curPosition  也就是不包含头部的的position
+     * remove会自动移除掉list的position.不需要自己移除，add的话就要自行添加了
      */
     public void remove( int curPosition) {
         if(swipe_holder!=null&&swipe_layout!=0) {
             swipe_holder.swipe.setIsSwipe(true);
             swipe_holder=null;
-            mDataSet.remove(curPosition);
         }
+        mDataSet.remove(curPosition);
         //移除的的时候一定要算上头部【由于RecyclerView是没有头部的，所以自定义的时候加上去的，，所以会导致notifyItemInserted失效少了2个】
         notifyItemRemoved(curPosition +  getHeaderViewsCount());
         if(mDataSet!=null&&mDataSet.isEmpty()){
