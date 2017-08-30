@@ -7,7 +7,7 @@
 ![](http://upload-images.jianshu.io/upload_images/6835615-a47331dae39a6f82.gif?imageMogr2/auto-orient/strip)
 
 # 依赖：
-compile'com.yanxuwen.MyRecyclerView:MyRecyclerview:1.3.2'
+compile'com.yanxuwen.MyRecyclerView:MyRecyclerview:1.3.7'
 # 1.上下拉实现：
 ######    xml：
 
