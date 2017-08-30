@@ -164,6 +164,16 @@ public class MyRecyclerView extends RecyclerView {
         }
         mHeaderViews.add(view);
     }
+    public void addHeaderView(int position,View view) {
+        mHeaderViews.add(position,view);
+    }
+
+    public ArrayList<View> getHeaderViews(){
+      return  mHeaderViews;
+    }
+    public View getHeaderView(int position){
+        return mHeaderViews.get(position);
+    }
     public void removeHeaderView(int position){
         if(mHeaderViews!=null&&mHeaderViews.size()>position){
             mHeaderViews.remove(position);
@@ -293,6 +303,9 @@ public class MyRecyclerView extends RecyclerView {
             }
         });
         if(mHeaderViews!=null)mHeaderViews.remove(0);
+    }
+    public boolean isGoogleRefresh(){
+        return isGoogleRefresh;
     }
 
     public void setRefreshProgressStyle(int style) {
