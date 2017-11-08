@@ -220,10 +220,12 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
             swipe_holder=null;
         }
         mDataSet.remove(curPosition);
+        getRecyclerView().setItemAnimator(getRecyclerView().getItemAnimator());
         //移除的的时候一定要算上头部【由于RecyclerView是没有头部的，所以自定义的时候加上去的，，所以会导致notifyItemInserted失效少了2个】
         notifyItemRemoved(curPosition +  getHeaderViewsCount());
         if(mDataSet!=null&&mDataSet.isEmpty()){
             notifyDataSetChanged();
+            getRecyclerView().noMoreLoading("");
         }
     }
 
@@ -232,9 +234,18 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
      * 用于外部调用，则需要加上头部
      */
     public void add(int curPosition) {
+        getRecyclerView().setItemAnimator(getRecyclerView().getItemAnimator());
         //添加的时候一定要算上头部【由于RecyclerView是没有头部的，所以自定义的时候加上去的，，所以会导致notifyItemInserted失效少了2个】
         notifyItemInserted(curPosition +  getHeaderViewsCount());
 //        notifyItemRangeChanged(position, getItemCount());
+    }
+
+    /**
+     * 局部刷新
+     */
+    public void onItemChanged(int curPosition){
+        getRecyclerView().setItemAnimator(getRecyclerView().getItemAnimator());
+        notifyItemChanged(curPosition +  getHeaderViewsCount());
     }
 
 

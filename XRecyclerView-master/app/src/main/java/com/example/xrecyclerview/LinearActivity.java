@@ -1,5 +1,6 @@
 package com.example.xrecyclerview;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -87,8 +88,7 @@ public class LinearActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new MyBaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(MyBaseAdapter.BaseViewHolder holder,View view, int position) {
-                holder.expand();
-                Log.e("xxx", position + "");
+              startActivity(new Intent(LinearActivity.this,LinearActivity.class));
             }
         });
         mAdapter.setOnItemLongClickListener(new MyBaseAdapter.OnItemLongClickListener() {

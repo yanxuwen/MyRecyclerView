@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -24,6 +25,7 @@ import com.yanxuwen.MyRecyclerview.animators.animators.FlipInLeftYAnimator;
 import com.yanxuwen.MyRecyclerview.animators.animators.FlipInRightYAnimator;
 import com.yanxuwen.MyRecyclerview.animators.animators.FlipInTopXAnimator;
 import com.yanxuwen.MyRecyclerview.animators.animators.LandingAnimator;
+import com.yanxuwen.MyRecyclerview.animators.animators.NullAnimator;
 import com.yanxuwen.MyRecyclerview.animators.animators.OvershootInLeftAnimator;
 import com.yanxuwen.MyRecyclerview.animators.animators.OvershootInRightAnimator;
 import com.yanxuwen.MyRecyclerview.animators.animators.ScaleInAnimator;
@@ -302,7 +304,7 @@ public class MyRecyclerView extends RecyclerView {
                 }
             }
         });
-        if(mHeaderViews!=null)mHeaderViews.remove(0);
+        if(mHeaderViews!=null&&mHeaderViews.size()>0)mHeaderViews.remove(0);
     }
     public boolean isGoogleRefresh(){
         return isGoogleRefresh;
@@ -747,11 +749,26 @@ public class MyRecyclerView extends RecyclerView {
         setItemAnimator(type.getAnimator());
         getItemAnimator().setAddDuration(addduration);
         getItemAnimator().setRemoveDuration(removeduration);
+        this.getItemAnimator().setMoveDuration(DefaultAddDuration);
+        this.getItemAnimator().setRemoveDuration(DefaultAddDuration);
     }
     public void setItemAnimator(ItemType type){
         setItemAnimator(type.getAnimator());
         getItemAnimator().setAddDuration(DefaultAddDuration);
         getItemAnimator().setRemoveDuration(DefaultRemoveDuration);
+        this.getItemAnimator().setMoveDuration(DefaultAddDuration);
+        this.getItemAnimator().setRemoveDuration(DefaultAddDuration);
+    }
+    /**
+     * 关闭默认局部刷新动画
+     */
+    public void closeDefaultAnimator() {
+        setItemAnimator(new NullAnimator());
+        this.getItemAnimator().setAddDuration(0);
+        this.getItemAnimator().setChangeDuration(0);
+        this.getItemAnimator().setMoveDuration(0);
+        this.getItemAnimator().setRemoveDuration(0);
+        ((SimpleItemAnimator) this.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
     /**
