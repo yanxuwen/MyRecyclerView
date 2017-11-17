@@ -156,7 +156,7 @@ public class LinearActivity extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 public void run() {
 
-                    mRecyclerView.noMoreLoading("");
+                    mRecyclerView.noMoreLoading();
                 }
             }, 1000);
         }

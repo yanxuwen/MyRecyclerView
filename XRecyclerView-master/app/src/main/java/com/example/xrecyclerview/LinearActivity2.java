@@ -16,12 +16,13 @@ import android.view.ViewGroup;
 import com.yanxuwen.DensityUtil;
 import com.yanxuwen.MyRecyclerview.MyBaseAdapter;
 import com.yanxuwen.MyRecyclerview.MyRecyclerView;
+import com.yanxuwen.MyRecyclerview.MySwipeRefreshLayout;
 import com.yanxuwen.MyRecyclerview.ProgressStyle;
 
 import java.util.ArrayList;
 
 public class LinearActivity2 extends AppCompatActivity implements MyRecyclerView.LoadingListener{
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private MySwipeRefreshLayout mMySwipeRefreshLayout;
     private MyRecyclerView mRecyclerView;
     private MyChildAdapter mAdapter;
     private ArrayList<String> listData;
@@ -35,16 +36,16 @@ public class LinearActivity2 extends AppCompatActivity implements MyRecyclerView
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //-------------------------------mSwipeRefreshLayout初始化--------------------------------------------//
-        mSwipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.refreshLayout);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.black);
-        mSwipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);;
-        mSwipeRefreshLayout.setProgressBackgroundColor(R.color.white);
+        mMySwipeRefreshLayout=(MySwipeRefreshLayout)findViewById(R.id.refreshLayout);
+        mMySwipeRefreshLayout.setColorSchemeResources(R.color.black);
+        mMySwipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);;
+        mMySwipeRefreshLayout.setProgressBackgroundColor(R.color.white);
         //swipeRefreshLayout.setPadding(20, 20, 20, 20);
         //代表支持缩放，0为start, 200为end
-        mSwipeRefreshLayout.setProgressViewOffset(false, -DensityUtil.dip2px(this,50), DensityUtil.dip2px(this,30));
+        mMySwipeRefreshLayout.setProgressViewOffset(false, -DensityUtil.dip2px(this,50), DensityUtil.dip2px(this,30));
         //// 设置手指在屏幕下拉多少距离会触发下拉刷新
 //        mSwipeRefreshLayout.setDistanceToTriggerSync(DensityUtil.dip2px(this,50));
-        mSwipeRefreshLayout.setProgressViewEndTarget(false, DensityUtil.dip2px(this,30));
+        mMySwipeRefreshLayout.setProgressViewEndTarget(false, DensityUtil.dip2px(this,30));
         //////////////////////////////////开始处理列表//////////////////////////////////////////////////////////
         mRecyclerView = (MyRecyclerView)this.findViewById(R.id.recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -57,7 +58,7 @@ public class LinearActivity2 extends AppCompatActivity implements MyRecyclerView
             mRecyclerView.getMaterialProgressView().setColorSchemeResources(R.color.black);
         }
         //注意由于下来刷新用的是谷歌的，，则要设置下谷歌刷新标识
-        mRecyclerView.setGoogleRefresh(true,mSwipeRefreshLayout);
+        mRecyclerView.setGoogleRefresh(true,mMySwipeRefreshLayout);
         //只有调用setLoadingMoreEnabled才会打开上啦加载
         mRecyclerView.setLoadingMoreEnabled(true);
         View header =   LayoutInflater.from(this).inflate(R.layout.recyclerview_header, (ViewGroup)findViewById(android.R.id.content),false);
@@ -73,8 +74,7 @@ public class LinearActivity2 extends AppCompatActivity implements MyRecyclerView
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                onRefresh();
+                mMySwipeRefreshLayout.setRefreshing(true);
             }
         },100);
         findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
@@ -132,7 +132,7 @@ public class LinearActivity2 extends AppCompatActivity implements MyRecyclerView
             times = 0;
             new Handler().postDelayed(new Runnable(){
                 public void run() {
-                    mSwipeRefreshLayout.setRefreshing(false);
+                    mMySwipeRefreshLayout.setRefreshing(false);
                     listData.clear();
                     for(int i = 0; i < 20 ;i++){
                         listData.add("item" + i );
@@ -162,7 +162,7 @@ public class LinearActivity2 extends AppCompatActivity implements MyRecyclerView
             new Handler().postDelayed(new Runnable() {
                 public void run() {
 
-                    mRecyclerView.noMoreLoading("");
+                    mRecyclerView.noMoreLoading();
                 }
             }, 2000);
         }

@@ -3,7 +3,9 @@ package com.yanxuwen.MyRecyclerview;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +25,8 @@ import java.util.List;
  * Created by yanxuwen on 2016/05/4.
  */
 public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHolder> {
+    boolean horizontal=false;
+
     public static int NOOPENID=-1;
     private  Context mContext;
     private List<?> mDataSet;
@@ -54,6 +58,17 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
      */
     public void setRecyclerView(MyRecyclerView mMyRecyclerView){
         this.mMyRecyclerView=mMyRecyclerView;
+
+        try{
+            RecyclerView.LayoutManager mLayoutManager = getRecyclerView().getLayoutManager();
+            if(mLayoutManager instanceof LinearLayoutManager){
+                horizontal=((LinearLayoutManager)mLayoutManager).getOrientation()==0?true:false;
+            }
+        }catch (Exception e){
+        }
+    }
+    public boolean getHorizontal(){
+        return horizontal;
     }
     public MyRecyclerView getRecyclerView(){
         return mMyRecyclerView;
@@ -86,23 +101,47 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
      * 设置item布局
      */
    public View setLayout(int layout,ViewGroup parent ){
-       View v = LayoutInflater.from(mContext).inflate(layout, parent, false);
+       View v;
+       if(getHorizontal()){
+           v = LayoutInflater.from(mContext).inflate(layout,null);
+       }else{
+           v = LayoutInflater.from(mContext).inflate(layout, parent, false);
+       }
+
        mainview=v;
-       ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.listview_base, parent, false);
+       ViewGroup viewGroup;
+       if(getHorizontal()){
+           viewGroup = (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.listview_base,null);
+       }else{
+           viewGroup = (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.listview_base, parent, false);
+       }
        //添加滑动菜单
        ViewGroup layout_swipe=(ViewGroup)viewGroup.findViewById(R.id.layout_swipelayout);
        View view_swipe=null;
        if(swipe_layout!=0){
-            view_swipe = (View) LayoutInflater.from(mContext).inflate(swipe_layout, parent, false);
+           if(getHorizontal()){
+               view_swipe = (View) LayoutInflater.from(mContext).inflate(swipe_layout, null);
+           }else{
+               view_swipe = (View) LayoutInflater.from(mContext).inflate(swipe_layout, parent, false);
+           }
        }else{
-           view_swipe = (View) LayoutInflater.from(mContext).inflate(R.layout.swipe_default, parent, false);
+           if(getHorizontal()){
+               view_swipe = (View) LayoutInflater.from(mContext).inflate(R.layout.swipe_default,null);
+           }else{
+               view_swipe = (View) LayoutInflater.from(mContext).inflate(R.layout.swipe_default, parent, false);
+           }
        }
            layout_swipe.addView(view_swipe);
        layout_swipe.addView(v);
        //添加展开列表
        if(expand_layout!=0){
            RelativeLayout viewgroup_expand=(RelativeLayout)viewGroup.findViewById(R.id.layout_expandable);
-           View view_expand = (ViewGroup) LayoutInflater.from(mContext).inflate(expand_layout, parent, false);
+           View view_expand;
+           if(getHorizontal()){
+               view_expand = (ViewGroup) LayoutInflater.from(mContext).inflate(expand_layout,null);
+           }else{
+               view_expand = (ViewGroup) LayoutInflater.from(mContext).inflate(expand_layout, parent, false);
+           }
            viewgroup_expand.addView(view_expand);
        }
        return viewGroup;

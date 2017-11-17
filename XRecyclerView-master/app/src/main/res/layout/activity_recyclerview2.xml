@@ -47,7 +47,7 @@
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.yanxuwen.MyRecyclerview.MySwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -58,7 +58,7 @@
             android:layout_height="fill_parent"
             >
         </com.yanxuwen.MyRecyclerview.MyRecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </com.yanxuwen.MyRecyclerview.MySwipeRefreshLayout>
     <TextView
         android:gravity="center"
         android:id="@+id/text_empty"

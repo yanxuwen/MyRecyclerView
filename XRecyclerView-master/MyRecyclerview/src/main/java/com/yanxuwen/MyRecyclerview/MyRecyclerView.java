@@ -284,17 +284,27 @@ public class MyRecyclerView extends RecyclerView {
             }
         }
     }
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private MySwipeRefreshLayout mMySwipeRefreshLayout;
 
     /**
      * @param enabled  用于判断是否设置谷歌的下拉刷新
-     * @param mSwipeRefreshLayout  谷歌下拉刷新的控件
+     * @param mMySwipeRefreshLayout  谷歌下拉刷新的控件,自己定义的刷新控件，其实就是修改了setRefreshing会触发onRefresh，谷歌自带的不触发onRefresh
      * 设置谷歌下拉刷新，去除原来的下拉刷新
      */
-    public void setGoogleRefresh(boolean enabled,SwipeRefreshLayout mSwipeRefreshLayout){
+    public void setGoogleRefresh(boolean enabled,MySwipeRefreshLayout mMySwipeRefreshLayout){
         isGoogleRefresh=enabled;
-        this.mSwipeRefreshLayout=mSwipeRefreshLayout;
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+        this.mMySwipeRefreshLayout=mMySwipeRefreshLayout;
+        mMySwipeRefreshLayout.setOnMyRefreshListener(new MySwipeRefreshLayout.OnMyRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (mLoadingListener != null) {
+                    mLoadingListener.onRefresh();
+                    isnomore = false;
+                    previousTotal = 0;
+                }
+            }
+        });
+        mMySwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh() {
                 if (mLoadingListener != null) {
@@ -381,7 +391,7 @@ public class MyRecyclerView extends RecyclerView {
                     && lastVisibleItemPosition -getHeaderViewsCount()>= layoutManager.getItemCount() - 1 -getHeaderViewsCount()-getFootersViewsCount()&& /** layoutManager.getItemCount() > layoutManager.getChildCount() && */!isnomore) {
                if(mRefreshHeader==null||(mRefreshHeader!=null&& mRefreshHeader.getState() < BaseArrowRefreshHeader.STATE_REFRESHING)){
                    //如果是谷歌的下拉刷新，则在刷新的时候不能加载
-                   if(!isGoogleRefresh||(isGoogleRefresh&&mSwipeRefreshLayout!=null&&!mSwipeRefreshLayout.isRefreshing())){
+                   if(!isGoogleRefresh||(isGoogleRefresh&&mMySwipeRefreshLayout!=null&&!mMySwipeRefreshLayout.isRefreshing())){
                        //如果没有数据的时候，禁止加载
                        if(mAdapter!=null){
                           int itemCount= ((MyBaseAdapter) mAdapter).getItemCount();
