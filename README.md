@@ -1,14 +1,13 @@
-# MyRecyclerView
-打造RecyclerView下拉刷新与上拉更多，仿QQ左滑删除，点击展开，城市列表各种功能。
-
-# 前言
+#前言
 现在下拉上拉控件非常多，但是网上的上拉下拉控件，只有这2种功能，有时候我们需要像QQ那样滑动item就出现了删除按钮，有时候我们需要点击item可以展开更多的信息，以便我们看更多的信息，有时候我们需要谷歌自带的下拉控件，有时候需要自己定义上下拉，切换来切换去很麻烦，于是我在某个大神（忘记是哪个了）的下拉上拉的控件的基础上，增加了谷歌自带下拉以及上拉样式模仿了谷歌下拉的那种样式，还有滑动item出现删除跟展开更多，和城市列表，，以上的功能都只需要简单的配置下就可以使用。
-## 首先先看个效果图
-![](http://upload-images.jianshu.io/upload_images/6835615-a47331dae39a6f82.gif?imageMogr2/auto-orient/strip)
+##首先先看个效果图
 
-# 依赖：
-compile'com.yanxuwen.MyRecyclerView:MyRecyclerview:1.4.3'
-# 1.上下拉实现：
+![GIF.gif](http://upload-images.jianshu.io/upload_images/6835615-ecfac2f40e5dbae1.gif?imageMogr2/auto-orient/strip)
+
+
+#依赖：
+compile'com.yanxuwen.MyRecyclerView:MyRecyclerview:1.4.9'
+#1.上下拉实现：
 ######    xml：
 
      <com.yanxuwen.MyRecyclerview.MyRecyclerView
@@ -17,7 +16,7 @@ compile'com.yanxuwen.MyRecyclerView:MyRecyclerview:1.4.3'
      android:layout_height="fill_parent"
     />
 
- ###### java：
+ ######java：
 ~~~
  mRecyclerView= (MyRecyclerView)this.findViewById(R.id.recyclerview);
  LinearLayoutManager layoutManager =newLinearLayoutManager(this);
@@ -64,22 +63,22 @@ Log.e("xxx",position +"");
 }
 });
 ~~~
-###### 刷新完后操作，记得调用
+######刷新完后操作，记得调用
 ~~~
 mAdapter.setFirstOnly(true);
 mRecyclerView.refreshComplete();
 ~~~
-###### 加载完后操作：
+######加载完后操作：
 ~~~
 mRecyclerView.refreshComplete();
 mRecyclerView.loadMoreComplete();
 ~~~
-###### 如果没有数据了，调用
+######如果没有数据了，调用
 ~~~
-//也可以不传递参数，默认会显示“没有了”，
+//也可以不传递参数，默认会显示空白
 mRecyclerView.noMoreLoading("没有了");
 ~~~
-###### Adapter:
+######Adapter:
 需要继承MyBaseAdapter，主要介绍onCreateViewHolder的功能
 ~~~
 publicViewHolderonCreateViewHolder(ViewGroup parent, intviewType) {
@@ -95,10 +94,10 @@ return newViewHolder(setLayout(R.layout.item,parent));
 
 
 </br>
-# 2.谷歌自带刷新样式：
+#2.谷歌自带刷新样式：
 
 ######    xml：其实就是在外层嵌入SwipeRefreshLayout
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.yanxuwen.MyRecyclerview.MySwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -109,7 +108,7 @@ return newViewHolder(setLayout(R.layout.item,parent));
             >
         />
     />
-###### java：代码几乎跟上面的写法是一样的，无非就是取消了下拉刷新用谷歌刷新替代，更改上拉加载样式，所以主要介绍变动的代码
+######java：代码几乎跟上面的写法是一样的，无非就是取消了下拉刷新用谷歌刷新替代，更改上拉加载样式，所以主要介绍变动的代码
 ~~~
 //设置加载样式，为MaterialDesign样式，也就是类似谷歌刷新的样式
 mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.MaterialDesign);
@@ -123,18 +122,18 @@ mRecyclerView.setGoogleRefresh(true,mSwipeRefreshLayout);
 //mRecyclerView.setPullRefreshEnabled(true);
 //启动可以加载
 mRecyclerView.setLoadingMoreEnabled(true);
-//执行刷新，【注意,谷歌的刷新不等同于上面的刷新，上面的刷新只要调用 mRecyclerView.setRefreshing(true);就会自动下拉出刷新】
-//调用下拉刷新图标
+//执行刷新，【注意,这里的谷歌刷新我们在封装了一层MySwipeRefreshLayout，如果使用的是MySwipeRefreshLayout，
+ //mSwipeRefreshLayout.setRefreshing(true);会自动开启刷新，如果使用的是系统的MySwipeRefreshLayout，则还需要调
+ //用onRefresh()，这些大家都指定，就不需要我多说了】
+//执行刷新
 mSwipeRefreshLayout.setRefreshing(true);
-//执行刷新操作
-onRefresh();
 ~~~   
    
 
 
 </br>
-# 3.城市列表：
-######     xml：
+#3.城市列表：
+######    xml：
 ~~~
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -182,7 +181,7 @@ onRefresh();
 </RelativeLayout>
 
 ~~~
- ###### java：
+ ######java：
 ~~~
 mRv = (RecyclerView) findViewById(R.id.rv);
 mRv.setLayoutManager(mManager = new LinearLayoutManager(this));
@@ -206,7 +205,7 @@ mIndexBar.setPressedShowTextView(mTvSideBarHint)//设置HintTextView
                 .setLayoutManager(mManager);//设置RecyclerView的LayoutManager
  initDatas(getResources().getStringArray(R.array.provinces));
 ~~~
- ###### initDatas：
+ ######initDatas：
 ~~~
    mDatas = new ArrayList<>();
                 for (int i = 0; i < data.length; i++) {
@@ -229,9 +228,9 @@ mIndexBar.setPressedShowTextView(mTvSideBarHint)//设置HintTextView
                 mAdapter.setDatas(mDatas);
                 mHeaderAdapter.notifyDataSetChanged();
 ~~~
- ###### Adapter：跟上面的Adapter没什么区别，这里就不需要多介绍
+ ######Adapter：跟上面的Adapter没什么区别，这里就不需要多介绍
 
- ###### CityBean 重点，一定要继承BaseIndexPinyinBean 
+ ######CityBean 重点，一定要继承BaseIndexPinyinBean 
 ~~~
 public class CityBean extends BaseIndexPinyinBean {
 
@@ -292,3 +291,11 @@ public class CityBean extends BaseIndexPinyinBean {
 }
 
 ~~~
+
+
+ ######github代码：https://github.com/yanxuwen/MyRecyclerView
+ ######微信公众号：
+      
+![qrcode_for_gh_8e99f824c0d6_344.jpg](http://upload-images.jianshu.io/upload_images/6835615-8b35ce64a1688c8b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+####喜欢就在github star下,非常感谢o(∩_∩)o~~~
