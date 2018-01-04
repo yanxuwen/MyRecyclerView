@@ -132,7 +132,7 @@ public class LoadingMoreFooter extends LinearLayout {
             case STATE_NOMORE:
                 String nomore=state_nomore;
                 if(nomore==null){
-                    nomore=mContext.getText(R.string.nomore_loading)+"";
+                    nomore="";
                 }
                 if(text_color==0){
                     mText.setTextColor(Color.parseColor("#888888"));
