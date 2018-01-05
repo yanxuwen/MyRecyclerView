@@ -8,7 +8,7 @@
 
 # 依赖：
 compile'com.yanxuwen.MyRecyclerView:MyRecyclerview:1.4.9'
-#1.上下拉实现：
+# 1.上下拉实现：
 ###    xml：
 
      <com.yanxuwen.MyRecyclerview.MyRecyclerView
@@ -92,11 +92,9 @@ return newViewHolder(setLayout(R.layout.item,parent));
 
 ~~~
 
-
-</br>
 # 2.谷歌自带刷新样式：
 
-### xml：其实就是在外层嵌入SwipeRefreshLayout
+###  xml：其实就是在外层嵌入SwipeRefreshLayout
     <com.yanxuwen.MyRecyclerview.MySwipeRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
@@ -108,7 +106,7 @@ return newViewHolder(setLayout(R.layout.item,parent));
             >
         />
     />
-### java：代码几乎跟上面的写法是一样的，无非就是取消了下拉刷新用谷歌刷新替代，更改上拉加载样式，所以主要介绍变动的代码
+###  java：代码几乎跟上面的写法是一样的，无非就是取消了下拉刷新用谷歌刷新替代，更改上拉加载样式，所以主要介绍变动的代码
 ~~~
 //设置加载样式，为MaterialDesign样式，也就是类似谷歌刷新的样式
 mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.MaterialDesign);
@@ -131,7 +129,6 @@ mSwipeRefreshLayout.setRefreshing(true);
    
 
 
-</br>
 # 3.城市列表：
 ### xml：
 ~~~
@@ -181,7 +178,7 @@ mSwipeRefreshLayout.setRefreshing(true);
 </RelativeLayout>
 
 ~~~
- ###### java：
+### java：
 ~~~
 mRv = (RecyclerView) findViewById(R.id.rv);
 mRv.setLayoutManager(mManager = new LinearLayoutManager(this));
@@ -205,7 +202,7 @@ mIndexBar.setPressedShowTextView(mTvSideBarHint)//设置HintTextView
                 .setLayoutManager(mManager);//设置RecyclerView的LayoutManager
  initDatas(getResources().getStringArray(R.array.provinces));
 ~~~
- ### initDatas：
+### initDatas：
 ~~~
    mDatas = new ArrayList<>();
                 for (int i = 0; i < data.length; i++) {
@@ -228,9 +225,9 @@ mIndexBar.setPressedShowTextView(mTvSideBarHint)//设置HintTextView
                 mAdapter.setDatas(mDatas);
                 mHeaderAdapter.notifyDataSetChanged();
 ~~~
- ### Adapter：跟上面的Adapter没什么区别，这里就不需要多介绍
+### Adapter：跟上面的Adapter没什么区别，这里就不需要多介绍
 
- ### CityBean 重点，一定要继承BaseIndexPinyinBean 
+### CityBean 重点，一定要继承BaseIndexPinyinBean 
 ~~~
 public class CityBean extends BaseIndexPinyinBean {
 
@@ -293,8 +290,8 @@ public class CityBean extends BaseIndexPinyinBean {
 ~~~
 
 
- ### github代码：https://github.com/yanxuwen/MyRecyclerView
- ### 微信公众号：
+### github代码：https://github.com/yanxuwen/MyRecyclerView
+### 微信公众号：
       
 ![qrcode_for_gh_8e99f824c0d6_344.jpg](http://upload-images.jianshu.io/upload_images/6835615-8b35ce64a1688c8b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
