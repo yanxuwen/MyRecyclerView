@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHolder> {
     boolean horizontal = false;
-
+    boolean isAnimate=true;
     public static int NOOPENID = -1;
     private Context mContext;
     private List<?> mDataSet;
@@ -93,6 +93,9 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
     private boolean getHorizontal() {
         return horizontal;
     }
+
+    private boolean isAnimate(){return  isAnimate;}
+    public void setIsAnimate(boolean isAnimate){this.isAnimate=isAnimate;}
 
     public MyRecyclerView getMyRecyclerView() {
         return mMyRecyclerView;
@@ -261,7 +264,7 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
             }
         }
         //显示动画
-        if (!isFirstOnly || adapterPosition > mLastPosition) {
+        if (isAnimate&&(!isFirstOnly || adapterPosition > mLastPosition)) {
             for (Animator anim : getAnimators(holder.itemView)) {
                 anim.setDuration(mDuration).start();
                 anim.setInterpolator(new OvershootInterpolator(.5f));

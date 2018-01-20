@@ -33,4 +33,17 @@ public class MySwipeRefreshLayout extends SwipeRefreshLayout {
             if (mOnMyRefreshListener != null) mOnMyRefreshListener.onRefresh();
         }
     }
+
+    /**
+     * @param refreshing
+     * @param delayMillis  延迟几秒
+     */
+    public void setRefreshing(final boolean refreshing, long delayMillis) {
+        this.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setRefreshing(refreshing);
+            }
+        },delayMillis);
+    }
 }

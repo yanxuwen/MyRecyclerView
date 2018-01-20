@@ -781,6 +781,18 @@ public class MyRecyclerView extends RecyclerView {
         }
     }
 
+    /**
+     * @param refreshing
+     * @param delayMillis  延迟几秒
+     */
+    public void setRefreshing(final boolean refreshing, long delayMillis) {
+        this.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setRefreshing(refreshing);
+            }
+        },delayMillis);
+    }
     public void setItemAnimator(ItemType type, int addduration, int removeduration) {
         setItemAnimator(type.getAnimator());
         getItemAnimator().setAddDuration(addduration);

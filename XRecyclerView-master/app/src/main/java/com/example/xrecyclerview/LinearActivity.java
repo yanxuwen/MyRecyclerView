@@ -69,6 +69,7 @@ public class LinearActivity extends AppCompatActivity {
 
         listData = new  ArrayList<String>();
         mAdapter = new MyChildAdapter(this,listData);
+        mAdapter.setIsAnimate(false);
         mRecyclerView.setAdapter(mAdapter);
         //不同于谷歌的SwipeRefreshLayout，SwipeRefreshLayout.setRefreshing(true);只是单纯的打开加载样式，但不会调用onRefresh方法
         //而这里会自动调用
