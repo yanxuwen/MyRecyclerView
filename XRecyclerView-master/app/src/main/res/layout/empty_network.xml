@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--寺庙关注空状态-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/emptyview_network"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    android:gravity="center"
+    android:paddingBottom="50dp"
+    android:visibility="gone"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_emptyview"
+        android:layout_centerInParent="true">
+        <ImageView
+            android:id="@+id/iv_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_launcher"
+            />
+        <TextView
+            android:id="@+id/tv_error"
+            android:layout_below="@id/iv_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="网络请求失败，请检查网络！\n轻触刷新刷新"
+            android:textSize="13sp"
+            android:textColor="#999999"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            />
+    </RelativeLayout>
+
+</LinearLayout>

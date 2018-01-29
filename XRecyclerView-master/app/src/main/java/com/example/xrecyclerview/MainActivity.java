@@ -26,26 +26,31 @@ public class MainActivity extends AppCompatActivity {
     }
     public void goto3(View v) {
         Intent intent = new Intent();
+        intent.setClass(this,LinearActivity3.class);
+        startActivity(intent);
+    }
+    public void goto4(View v) {
+        Intent intent = new Intent();
         intent.setClass(this,PinnedHeaderActivity.class);
         startActivity(intent);
     }
 
-    public void goto4(View v) {
+    public void goto5(View v) {
         Intent intent = new Intent();
         intent.setClass(this, EmptyViewActivity.class);
         startActivity(intent);
     }
-    public void goto5(View v) {
+    public void goto6(View v) {
         Intent intent = new Intent();
         intent.setClass(this, GridActivity.class);
         startActivity(intent);
     }
-    public void goto6(View v) {
+    public void goto7(View v) {
         Intent intent = new Intent();
         intent.setClass(this, StaggeredGridActivity.class);
         startActivity(intent);
     }
-    public void goto7(View v) {
+    public void goto8(View v) {
         Intent intent = new Intent();
         intent.setClass(this, customListView.class);
         startActivity(intent);

@@ -22,32 +22,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dip"
+        android:text="3、4行代码构建列表"
+        />
+    <Button
+        android:onClick="goto4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
         android:text="城市列表"
         />
 
     <Button
-        android:onClick="goto4"
+        android:onClick="goto5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dip"
         android:text="emptyViewSupport"
         />
     <Button
-        android:onClick="goto5"
+        android:onClick="goto6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dip"
         android:text="格子试图"
         />
     <Button
-        android:onClick="goto6"
+        android:onClick="goto7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dip"
         android:text="瀑布流"
         />
     <Button
-        android:onClick="goto7"
+        android:onClick="goto8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dip"

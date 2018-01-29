@@ -29,6 +29,10 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+            android:name=".LinearActivity3"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name=".StaggeredGridActivity"
             android:label="@string/app_name" >
         </activity>
