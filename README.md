@@ -7,7 +7,7 @@
 
 
 # 依赖：
-compile'com.yanxuwen.MyRecyclerView:MyRecyclerview:1.5.1'
+compile'com.yanxuwen.MyRecyclerView:MyRecyclerview:1.5.4'
 # 1.上下拉实现：
 ###    xml：
 
