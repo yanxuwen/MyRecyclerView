@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.yanxuwen.DensityUtil;
 import com.yanxuwen.MyRecyclerview.MyBaseAdapter;
@@ -61,8 +60,8 @@ public class LinearActivity2 extends AppCompatActivity implements MyRecyclerView
         mRecyclerView.setGoogleRefresh(true,mMySwipeRefreshLayout);
         //只有调用setLoadingMoreEnabled才会打开上啦加载
         mRecyclerView.setLoadingMoreEnabled(true);
-        View header =   LayoutInflater.from(this).inflate(R.layout.recyclerview_header, (ViewGroup)findViewById(android.R.id.content),false);
-        mRecyclerView.addHeaderView(header);
+        View head_view=   LayoutInflater.from(this).inflate(R.layout.recyclerview_header,null);
+        mRecyclerView.addHeaderView(head_view);
         mRecyclerView.setLoadingListener(this);
 
         listData = new  ArrayList<String>();

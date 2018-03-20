@@ -1,25 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.yanxuwen.MyRecyclerview.MySwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/refreshLayout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/transparent"
-    android:fillViewport="true">
-    <RelativeLayout
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
-        >
-        <com.yanxuwen.MyRecyclerview.MyRecyclerView
-            android:id="@+id/recyclerview"
+        android:background="#3DC49D"
+        android:minHeight="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:text="DEL" />
+
+            <TextView
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@id/del"
+                android:background="?attr/selectableItemBackground"
+                android:padding="10dp"
+                android:text="ADD" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <com.yanxuwen.MyRecyclerview.MySwipeRefreshLayout
+        android:layout_below="@id/tool_bar"
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:fillViewport="true">
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/transparent">
+            android:animateLayoutChanges="true">
 
-        </com.yanxuwen.MyRecyclerview.MyRecyclerView>
-        <include layout="@layout/empty_network" />
-        <include layout="@layout/empty_data" />
+            <com.yanxuwen.MyRecyclerview.MyRecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent">
 
-    </RelativeLayout>
-</com.yanxuwen.MyRecyclerview.MySwipeRefreshLayout>
+            </com.yanxuwen.MyRecyclerview.MyRecyclerView>
+
+            <include layout="@layout/empty_network" />
+
+            <include layout="@layout/empty_data" />
+
+        </RelativeLayout>
+    </com.yanxuwen.MyRecyclerview.MySwipeRefreshLayout>
+</RelativeLayout>
