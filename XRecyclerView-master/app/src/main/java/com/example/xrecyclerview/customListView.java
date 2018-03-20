@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.xrecyclerview.custom.MyArrowRefreshHeader;
 import com.yanxuwen.MyRecyclerview.MyBaseAdapter;
@@ -47,9 +46,9 @@ public class customListView extends AppCompatActivity {
         mRecyclerView.setPullRefreshEnabled(true);
         //只有调用setLoadingMoreEnabled才会打开上啦加载
         mRecyclerView.setLoadingMoreEnabled(true);
-        View header =   LayoutInflater.from(this).inflate(R.layout.recyclerview_header, (ViewGroup)findViewById(android.R.id.content),false);
-        mRecyclerView.addHeaderView(header);
-        header.setOnClickListener(new View.OnClickListener() {
+        View head_view=   LayoutInflater.from(this).inflate(R.layout.recyclerview_header,null);
+        mRecyclerView.addHeaderView(head_view);
+        head_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e("xxx", "头部");
