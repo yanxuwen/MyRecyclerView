@@ -13,7 +13,7 @@ import com.yanxuwen.MyRecyclerview.*
 /**
  * Created by yanxuwen on 2018/1/26.
  */
-open class RecyclerViewUtils(context: Context, mSwipeRefreshLayout: MySwipeRefreshLayout, mRecyclerView: MyRecyclerView, mAdapter: MyBaseAdapter) {
+open class RecyclerViewUtils(context: Context, mSwipeRefreshLayout: MySwipeRefreshLayout?, mRecyclerView: MyRecyclerView, mAdapter: MyBaseAdapter) {
     open var limit = 10
     open var context: Context?=null
     open var mSwipeRefreshLayout: MySwipeRefreshLayout?=null
@@ -24,7 +24,6 @@ open class RecyclerViewUtils(context: Context, mSwipeRefreshLayout: MySwipeRefre
         this.mSwipeRefreshLayout = mSwipeRefreshLayout
         this.mRecyclerView = mRecyclerView
         this.mAdapter = mAdapter
-        this.mAdapter?.setIsAnimate(false)
     }
     open fun getContentView(): ViewGroup? {
         return  mSwipeRefreshLayout
