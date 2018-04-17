@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.example.app.myapplication.Utils.RecyclerViewUtils;
+import com.yanxuwen.RecyclerViewUtils;
 import com.example.xrecyclerview.R;
 import com.yanxuwen.MyRecyclerview.MyBaseAdapter;
 import com.yanxuwen.MyRecyclerview.MyRecyclerView;

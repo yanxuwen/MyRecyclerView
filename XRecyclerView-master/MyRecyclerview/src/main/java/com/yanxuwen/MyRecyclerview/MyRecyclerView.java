@@ -1,7 +1,6 @@
 package com.yanxuwen.MyRecyclerview;
 
 import android.content.Context;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -311,16 +310,6 @@ public class MyRecyclerView extends RecyclerView {
         isGoogleRefresh = enabled;
         this.mMySwipeRefreshLayout = mMySwipeRefreshLayout;
         mMySwipeRefreshLayout.setOnMyRefreshListener(new MySwipeRefreshLayout.OnMyRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (mLoadingListener != null) {
-                    mLoadingListener.onRefresh();
-                    isnomore = false;
-                    previousTotal = 0;
-                }
-            }
-        });
-        mMySwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 if (mLoadingListener != null) {

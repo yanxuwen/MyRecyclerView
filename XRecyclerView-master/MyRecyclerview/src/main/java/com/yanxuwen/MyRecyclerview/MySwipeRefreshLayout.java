@@ -8,13 +8,19 @@ import android.util.AttributeSet;
  * Created by yanxuwen on 2017/11/17.
  */
 
-public class MySwipeRefreshLayout extends SwipeRefreshLayout {
+public class MySwipeRefreshLayout extends SwipeRefreshLayout implements SwipeRefreshLayout.OnRefreshListener {
+    @Override
+    public void onRefresh() {
+       if(mOnMyRefreshListener!=null)mOnMyRefreshListener.onRefresh();
+    }
+
     public interface OnMyRefreshListener{
         public void onRefresh();
     }
     public OnMyRefreshListener mOnMyRefreshListener;
     public void setOnMyRefreshListener(OnMyRefreshListener mOnMyRefreshListener){
         this.mOnMyRefreshListener=mOnMyRefreshListener;
+        setOnRefreshListener(this);
     }
     public MySwipeRefreshLayout(Context context) {
         super(context);

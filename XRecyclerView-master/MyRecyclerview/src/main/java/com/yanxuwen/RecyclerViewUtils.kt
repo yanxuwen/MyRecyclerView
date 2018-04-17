@@ -1,4 +1,4 @@
-package com.example.app.myapplication.Utils
+package com.yanxuwen
 
 import android.content.Context
 import android.support.v4.widget.NestedScrollView
@@ -7,8 +7,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
-import com.yanxuwen.DensityUtil
-import com.yanxuwen.MyRecyclerview.*
+import com.yanxuwen.MyRecyclerview.MyBaseAdapter
+import com.yanxuwen.MyRecyclerview.MyRecyclerView
+import com.yanxuwen.MyRecyclerview.MySwipeRefreshLayout
+import com.yanxuwen.MyRecyclerview.ProgressStyle
 
 /**
  * Created by yanxuwen on 2018/1/26.
