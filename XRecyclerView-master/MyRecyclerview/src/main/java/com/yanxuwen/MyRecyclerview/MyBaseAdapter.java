@@ -5,7 +5,6 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +18,9 @@ import com.yanxuwen.MyRecyclerview.animators.internal.ViewHelper;
 import com.yanxuwen.expandable.ExpandableLinearLayout;
 import com.yanxuwen.swipelibrary.SwipeLayout;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yanxuwen on 2016/05/4.
@@ -31,6 +32,8 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
     public static int NOOPENID = -1;
     private Context mContext;
     private List<?> mDataSet;
+    private Map<Integer,Boolean> map_animate;
+
     public BaseViewHolder swipe_holder;
     public BaseViewHolder expand_holder;
     /**
@@ -40,8 +43,6 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
 
     private int mDuration = 3000;//只适合透明度才3秒，如果是移动或者之类的，时间最好1秒之类
     private Interpolator mInterpolator = new LinearInterpolator();
-    private int mLastPosition = -1;
-    private boolean isFirstOnly = true;
     //下面为滑动菜单所用到的
     private int swipe_layout;//滑动菜单的试图
     public SwipeLayout.DragEdge mDragEdge = SwipeLayout.DragEdge.Right;
@@ -57,6 +58,7 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
     public MyBaseAdapter(Context context, List<?> dataSet) {
         mContext = context;
         mDataSet = dataSet;
+        map_animate=new HashMap<>();
     }
     /**
      * 如果是使用系统的RecyclerView,一定要调用该句
@@ -263,25 +265,22 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
                 holder.getExpandView().collapse(false);
             }
         }
+        if(map_animate.size()>mDataSet.size()){
+            map_animate.clear();
+        }
         //显示动画
-        if (isAnimate&&(!isFirstOnly || adapterPosition > mLastPosition)) {
+        if (isAnimate&&(map_animate.get(adapterPosition)==null||!map_animate.get(adapterPosition))) {
+            holder.itemView.setTag(true);
+            if(!map_animate.containsKey(adapterPosition)){
+                map_animate.put(adapterPosition,true);
+            }
             for (Animator anim : getAnimators(holder.itemView)) {
+                //设置标签已经设置过动画了，避免2个动画
                 anim.setDuration(mDuration).start();
                 anim.setInterpolator(new OvershootInterpolator(.5f));
             }
-            mLastPosition = adapterPosition;
         } else {
             ViewHelper.clear(holder.itemView);
-        }
-    }
-
-    /**
-     * 刷新的时候记得重置
-     */
-    public void setFirstOnly(boolean firstOnly) {
-        isFirstOnly = firstOnly;
-        if (isFirstOnly) {
-            mLastPosition = -1;
         }
     }
 

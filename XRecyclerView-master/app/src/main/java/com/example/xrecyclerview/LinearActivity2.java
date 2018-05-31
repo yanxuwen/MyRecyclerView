@@ -137,7 +137,6 @@ public class LinearActivity2 extends AppCompatActivity implements MyRecyclerView
                         listData.add("item" + i );
                     }
                     mAdapter.notifyDataSetChanged();
-                    mAdapter.setFirstOnly(true);
                     mRecyclerView.refreshComplete();
                 }
 

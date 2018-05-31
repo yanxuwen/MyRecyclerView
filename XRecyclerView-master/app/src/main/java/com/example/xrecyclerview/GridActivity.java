@@ -134,7 +134,6 @@ public class GridActivity extends AppCompatActivity {
                     listData.add("item" + i );
                 }
                 mAdapter.notifyDataSetChanged();
-                mAdapter.setFirstOnly(true);
                 mRecyclerView.refreshComplete();
             }
 

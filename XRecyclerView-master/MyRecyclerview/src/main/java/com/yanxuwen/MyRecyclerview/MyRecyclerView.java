@@ -42,6 +42,8 @@ import com.yanxuwen.swipelibrary.SwipeLayout;
 import java.util.ArrayList;
 
 public class MyRecyclerView extends RecyclerView {
+    /**提前几个就开始加载*/
+    public int advanceLoad=2;
     /*添加跟删除动画*/
     public enum ItemType {
         FadeIn(new FadeInAnimator(new OvershootInterpolator(1f))),
@@ -378,7 +380,6 @@ public class MyRecyclerView extends RecyclerView {
     @Override
     public void onScrollStateChanged(int state) {
         super.onScrollStateChanged(state);
-
         if (state == RecyclerView.SCROLL_STATE_IDLE && mLoadingListener != null && !isLoadingData && loadingMoreEnabled) {
             LayoutManager layoutManager = getLayoutManager();
             int lastVisibleItemPosition;
@@ -395,9 +396,11 @@ public class MyRecyclerView extends RecyclerView {
             //当前数组只有1个的时候就无法加载问题
             //2、修改第二个判断，lastVisibleItemPosition为最后的可见视图的position,由于footview隐藏的话，就会少一个尾部position,所以就不会>=
             //所以lastVisibleItemPosition要减去头部，layoutManager.getItemCount()要减去头部跟尾部，
-            //什么时候footview会隐藏呢，在设置没有更多的时候是，文字设置成""空的话，就会隐藏掉尾部分
+            // lastVisibleItemPosition - getHeaderViewsCount()>= layoutManager.getItemCount() - 1 - getHeaderViewsCount() - getFootersViewsCount()则代表显示最后一个
+            //减去advanceLoad的意思是提前几个就开始加载。
+            //3什么时候footview会隐藏呢，在设置没有更多的时候是，文字设置成""空的话，就会隐藏掉尾部分
             if (layoutManager.getChildCount() > 0
-                    && lastVisibleItemPosition - getHeaderViewsCount() >= layoutManager.getItemCount() - 1 - getHeaderViewsCount() - getFootersViewsCount() && /** layoutManager.getItemCount() > layoutManager.getChildCount() && */!isnomore) {
+                    && lastVisibleItemPosition - getHeaderViewsCount()>= layoutManager.getItemCount() - 1 - getHeaderViewsCount() - getFootersViewsCount() -advanceLoad&& /** layoutManager.getItemCount() > layoutManager.getChildCount() && */!isnomore) {
                 if (mRefreshHeader == null || (mRefreshHeader != null && mRefreshHeader.getState() < BaseArrowRefreshHeader.STATE_REFRESHING)) {
                     //如果是谷歌的下拉刷新，则在刷新的时候不能加载
                     if (!isGoogleRefresh || (isGoogleRefresh && mMySwipeRefreshLayout != null && !mMySwipeRefreshLayout.isRefreshing())) {
@@ -406,14 +409,13 @@ public class MyRecyclerView extends RecyclerView {
                             int itemCount = ((MyBaseAdapter) mAdapter).getItemCount();
                             if (itemCount == 0) return;
                         }
-
                         View footView = getFootView();
                         if(footView==null){mLoadingListener.onLoadMore();return;}
                         isLoadingData = true;
                         if (footView instanceof LoadingMoreFooter) {
                             ((LoadingMoreFooter) footView).setState(LoadingMoreFooter.STATE_LOADING);
                             //防止一些没有滑动到最下面，影响美观，自动拉动到最下面
-                            smoothScrollBy(500, 500);
+//                            smoothScrollBy(500, 500);
                         } else {
                             footView.setVisibility(View.VISIBLE);
                         }

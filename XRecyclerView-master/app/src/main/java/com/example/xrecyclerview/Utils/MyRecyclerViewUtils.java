@@ -4,11 +4,11 @@ import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.yanxuwen.RecyclerViewUtils;
 import com.example.xrecyclerview.R;
 import com.yanxuwen.MyRecyclerview.MyBaseAdapter;
 import com.yanxuwen.MyRecyclerview.MyRecyclerView;
 import com.yanxuwen.MyRecyclerview.MySwipeRefreshLayout;
+import com.yanxuwen.RecyclerViewUtils;
 
 /**
  * Created by yanxuwen on 2018/1/26.

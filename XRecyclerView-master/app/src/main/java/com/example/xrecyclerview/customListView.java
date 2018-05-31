@@ -134,7 +134,6 @@ public class customListView extends AppCompatActivity {
                     listData.add("item" + i );
                 }
                 mAdapter.notifyDataSetChanged();
-                mAdapter.setFirstOnly(true);
                 mRecyclerView.refreshComplete();
             }
 

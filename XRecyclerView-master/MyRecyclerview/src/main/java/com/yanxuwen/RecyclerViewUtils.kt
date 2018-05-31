@@ -17,6 +17,8 @@ import com.yanxuwen.MyRecyclerview.ProgressStyle
  */
 open class RecyclerViewUtils(context: Context, mSwipeRefreshLayout: MySwipeRefreshLayout?, mRecyclerView: MyRecyclerView, mAdapter: MyBaseAdapter) {
     open var limit = 10
+    /**提前几个就开始加载*/
+    open var advanceLoad=2
     open var context: Context?=null
     open var mSwipeRefreshLayout: MySwipeRefreshLayout?=null
     open var mRecyclerView:MyRecyclerView?=null
@@ -26,6 +28,7 @@ open class RecyclerViewUtils(context: Context, mSwipeRefreshLayout: MySwipeRefre
         this.mSwipeRefreshLayout = mSwipeRefreshLayout
         this.mRecyclerView = mRecyclerView
         this.mAdapter = mAdapter
+        mRecyclerView.advanceLoad=advanceLoad;
     }
     open fun getContentView(): ViewGroup? {
         return  mSwipeRefreshLayout
@@ -70,7 +73,9 @@ open class RecyclerViewUtils(context: Context, mSwipeRefreshLayout: MySwipeRefre
         }
         //注意由于下来刷新用的是谷歌的，，则要设置下谷歌刷新标识
         try {
-            mRecyclerView?.setGoogleRefresh(true, mSwipeRefreshLayout)
+            if(mSwipeRefreshLayout!=null) {
+                mRecyclerView?.setGoogleRefresh(true, mSwipeRefreshLayout)
+            }
         } catch (e: Exception) {
         }
 
