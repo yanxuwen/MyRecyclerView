@@ -6,7 +6,6 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
@@ -15,6 +14,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.RelativeLayout;
 
 import com.yanxuwen.MyRecyclerview.animators.internal.ViewHelper;
+import com.yanxuwen.MySwipeLayout;
 import com.yanxuwen.expandable.ExpandableLinearLayout;
 import com.yanxuwen.swipelibrary.SwipeLayout;
 
@@ -33,8 +33,8 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
     private Context mContext;
     private List<?> mDataSet;
     private Map<Integer,Boolean> map_animate;
-
-    public BaseViewHolder swipe_holder;
+    View view_swipe = null;
+    public static BaseViewHolder swipe_holder;
     public BaseViewHolder expand_holder;
     /**
      * 展开position
@@ -45,12 +45,11 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
     private Interpolator mInterpolator = new LinearInterpolator();
     //下面为滑动菜单所用到的
     private int swipe_layout;//滑动菜单的试图
-    public SwipeLayout.DragEdge mDragEdge = SwipeLayout.DragEdge.Right;
-    public SwipeLayout.ShowMode mShowMode = SwipeLayout.ShowMode.LayDown;
+    public MySwipeLayout.DragEdge mDragEdge = MySwipeLayout.DragEdge.Right;
+    public MySwipeLayout.ShowMode mShowMode = MySwipeLayout.ShowMode.LayDown;
     private boolean isBounces = false;
     //下面为展开列表所用到的
     private int expand_layout;
-    private View mainview;
     private MyRecyclerView mMyRecyclerView;
     private RecyclerView mRecyclerView;
 
@@ -125,12 +124,6 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
     }
 
 
-    /**
-     * @return 获取主布局，也就是我们通常显示的布局，没有展开跟没有菜单
-     */
-    public View getMainLayout() {
-        return mainview;
-    }
 
     /**
      * 设置item布局
@@ -143,7 +136,6 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
             v = LayoutInflater.from(mContext).inflate(layout, parent, false);
         }
 
-        mainview = v;
         ViewGroup viewGroup;
         if (getHorizontal()) {
             viewGroup = (ViewGroup) LayoutInflater.from(mContext).inflate(R.layout.listview_base, null);
@@ -152,7 +144,6 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
         }
         //添加滑动菜单
         ViewGroup layout_swipe = (ViewGroup) viewGroup.findViewById(R.id.layout_swipelayout);
-        View view_swipe = null;
         if (swipe_layout != 0) {
             if (getHorizontal()) {
                 view_swipe = (View) LayoutInflater.from(mContext).inflate(swipe_layout, null);
@@ -188,7 +179,7 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
      * mode 拖动模式
      * bounces 是否开起弹簧
      */
-    public void addSwipe(int swipe_layout, SwipeLayout.ShowMode mode, SwipeLayout.DragEdge DragEdge, boolean bounces) {
+    public void addSwipe(int swipe_layout, MySwipeLayout.ShowMode mode, MySwipeLayout.DragEdge DragEdge, boolean bounces) {
         this.swipe_layout = swipe_layout;
         mShowMode = mode;
         mDragEdge = DragEdge;
@@ -235,6 +226,9 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
 
                     @Override
                     public void onClose(SwipeLayout swipeLayout) {
+                        MySwipeLayout.isIntercept=false;
+                        MyBaseAdapter.swipe_holder=null;
+
                     }
 
                     @Override
@@ -245,11 +239,13 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
                     @Override
                     public void onOpen(SwipeLayout swipeLayout) {
                         swipe_holder = holder;
+                        MySwipeLayout.isIntercept=true;
                     }
 
                     @Override
                     public void onHandRelease(SwipeLayout swipeLayout, float v, float v1) {
                         swipe_holder = holder;
+
                     }
                 });
             }
@@ -338,8 +334,7 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
     }
 
     public class BaseViewHolder extends RecyclerView.ViewHolder implements View.OnFocusChangeListener { //由于是lib工程，所以ButterKnife在这个类不管用
-        boolean isSwipe = true;
-        SwipeLayout swipe;
+        public MySwipeLayout swipe;
         View expand;
         private ExpandableLinearLayout expandableLayout;
 
@@ -352,8 +347,8 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
 
         public BaseViewHolder(final View itemView) {
             super(itemView);
-            View clickview = getMainLayout();
-            swipe = (SwipeLayout) itemView.findViewById(R.id.layout_swipelayout);
+            swipe = (MySwipeLayout) itemView.findViewById(R.id.layout_swipelayout);
+            View clickview = getMainView();
             expandableLayout = (ExpandableLinearLayout) itemView.findViewById(R.id.expandable_layout);
             if (swipe != null && swipe_layout != 0) {
                 swipe.setShowMode(mShowMode);
@@ -361,7 +356,7 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
                 swipe.setBounces(isBounces);
                 clickview = swipe.getSurfaceView();
             } else {
-                swipe.setIsSwipe(false);
+                setIsSwipe(false);
             }
             clickview.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -378,52 +373,6 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
                         return true;
                     }
                     return false;
-                }
-            });
-            clickview.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (!isSwipe) {
-                        return false;
-                    }
-                    if (swipe_layout != 0) {
-                        swipe.setIsSwipe(true);
-                    }
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        boolean isreturn = false;
-//                        //关闭展开线
-//                        if(expand_holder!=null){
-//                            expand_holder. expandableLayout.collapse();
-//                           try{expand_holder. expand.clearFocus();}catch (Exception e){
-//                               expand_holder. expandableLayout.clearFocus();
-//                           }
-//                            expand_holder=null;
-//                            isreturn=true;
-//                        }
-
-                        //关闭滑动菜单
-                        if (swipe_holder != null && swipe_layout != 0)
-                            swipe_holder.swipe.setIsSwipe(true);
-                        if (swipe_holder != null) {
-                            View view = swipe_holder.swipe;
-                            SwipeLayout mTouchView = null;
-                            if (view instanceof SwipeLayout) {
-                                mTouchView = (SwipeLayout) view;
-                            }
-                            if (mTouchView != null && mTouchView.getOpenStatus() != SwipeLayout.Status.Close) {
-                                if (swipe_holder != null && swipe_layout != 0) {
-                                    swipe.setIsSwipe(false);
-                                    swipe_holder.swipe.setIsSwipe(false);
-                                }
-                                mTouchView.close();
-                                mTouchView = null;
-                                isreturn = true;
-                            }
-                        }
-                        return isreturn;
-                    } else {
-                        return false;
-                    }
                 }
             });
         }
@@ -446,15 +395,27 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
         }
 
         /**
-         * 获取滑动试图
+         * 获取滑动控件，用于操作滑动的一些操作
          */
-        public SwipeLayout getSwipeView() {
+        public MySwipeLayout getSwipeLayout() {
             return swipe;
         }
+        /**
+         * 获取滑动出来试图，如删除视图
+         */
+        public View getSwipeView() {
+            return swipe.getChildAt(0);
+        }
+        /**
+         * @return 获取主布局，也就是我们通常显示的布局，没有展开跟没有菜单
+         */
+        public View getMainView() {
+            return swipe.getChildAt(1);
+        }
+
 
         public void setIsSwipe(boolean isSwipe) {
-            this.isSwipe = isSwipe;
-            getSwipeView().setIsSwipe(isSwipe);
+            getSwipeLayout().setIsSwipe(isSwipe);
         }
 
         @Override

@@ -7,13 +7,13 @@
     android:orientation="vertical"
     app:el_duration="300"
     app:el_expanded="false">
-<com.yanxuwen.swipelibrary.SwipeLayout
+<com.yanxuwen.MySwipeLayout
     android:id="@+id/layout_swipelayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
     >
-</com.yanxuwen.swipelibrary.SwipeLayout>
+</com.yanxuwen.MySwipeLayout>
    <RelativeLayout
        android:id="@+id/layout_expandable"
        android:layout_width="match_parent"

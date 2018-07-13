@@ -1,12 +1,12 @@
 package com.example.xrecyclerview;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yanxuwen.DensityUtil;
 import com.yanxuwen.MyRecyclerview.MyBaseAdapter;
@@ -81,6 +81,8 @@ public class MyChildAdapter extends MyBaseAdapter {
         View v_expand;
         @Bind(R.id.swipe_delete)
         View swipeDelete;
+        @Bind(R.id.layout)
+        LinearLayout layout;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -89,6 +91,21 @@ public class MyChildAdapter extends MyBaseAdapter {
             //设置自动展开按钮，
 //            setExpandView(v_expand);
             swipeDelete.setOnClickListener(this);
+//            layout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(mContext,"点击",Toast.LENGTH_SHORT).show();
+//
+//                }
+//            });
+            layout.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                                        Toast.makeText(mContext,"点击",Toast.LENGTH_SHORT).show();
+
+                    return false;
+                }
+            });
         }
 
         @Override

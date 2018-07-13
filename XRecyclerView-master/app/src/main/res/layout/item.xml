@@ -5,6 +5,13 @@
     android:background="@drawable/selector_bg_white"
     android:orientation="horizontal"
     >
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_bg_white"
+        android:orientation="horizontal"
+        >
     <View
         android:id="@+id/v_expand"
         android:layout_width="50dp"
@@ -20,4 +27,5 @@
         android:layout_marginLeft="10dip"
         android:text="test"
         android:layout_gravity="center"/>
+</LinearLayout>
 </LinearLayout>
