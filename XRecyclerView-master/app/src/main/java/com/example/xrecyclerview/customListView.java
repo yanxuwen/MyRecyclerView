@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,15 +24,14 @@ public class customListView extends AppCompatActivity {
     private ArrayList<String> listData;
     private int refreshTime = 0;
     private int times = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclerview);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         //////////////////////////////////开始处理列表//////////////////////////////////////////////////////////
-        mRecyclerView = (MyRecyclerView)this.findViewById(R.id.recyclerview);
+        mRecyclerView = (MyRecyclerView) this.findViewById(R.id.recyclerview);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -46,7 +44,7 @@ public class customListView extends AppCompatActivity {
         mRecyclerView.setPullRefreshEnabled(true);
         //只有调用setLoadingMoreEnabled才会打开上啦加载
         mRecyclerView.setLoadingMoreEnabled(true);
-        View head_view=   LayoutInflater.from(this).inflate(R.layout.recyclerview_header,null);
+        View head_view = LayoutInflater.from(this).inflate(R.layout.recyclerview_header, null);
         mRecyclerView.addHeaderView(head_view);
         head_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,8 +64,8 @@ public class customListView extends AppCompatActivity {
             }
         });
 
-        listData = new  ArrayList<String>();
-        mAdapter = new MyChildAdapter(this,listData);
+        listData = new ArrayList<String>();
+        mAdapter = new MyChildAdapter(this, listData);
         mRecyclerView.setAdapter(mAdapter);
         //不同于谷歌的SwipeRefreshLayout，SwipeRefreshLayout.setRefreshing(true);只是单纯的打开加载样式，但不会调用onRefresh方法
         //而这里会自动调用
@@ -80,21 +78,22 @@ public class customListView extends AppCompatActivity {
         });
 
         findViewById(R.id.del).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 mAdapter.remove(2);
             }
         });
         mAdapter.setOnItemClickListener(new MyBaseAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(MyBaseAdapter.BaseViewHolder holder,View view, int position) {
+            public void onItemClick(MyBaseAdapter.BaseViewHolder holder, View view, int position) {
                 holder.expand();
                 Log.e("xxx", position + "");
             }
         });
         mAdapter.setOnItemLongClickListener(new MyBaseAdapter.OnItemLongClickListener() {
             @Override
-            public void onItemLongClick(MyBaseAdapter.BaseViewHolder holder,View view, int position) {
-                if(position==1){
+            public void onItemLongClick(MyBaseAdapter.BaseViewHolder holder, View view, int position) {
+                if (position == 1) {
                     holder.expand();
                 }
                 Log.e("xxx", position + "long");
@@ -123,15 +122,16 @@ public class customListView extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void refresh(){
-        refreshTime ++;
+
+    public void refresh() {
+        refreshTime++;
         times = 0;
-        new Handler().postDelayed(new Runnable(){
+        new Handler().postDelayed(new Runnable() {
             public void run() {
 
                 listData.clear();
-                for(int i = 0; i < 20 ;i++){
-                    listData.add("item" + i );
+                for (int i = 0; i < 20; i++) {
+                    listData.add("item" + i);
                 }
                 mAdapter.notifyDataSetChanged();
                 mRecyclerView.refreshComplete();
@@ -139,13 +139,14 @@ public class customListView extends AppCompatActivity {
 
         }, 1000);            //refresh data here
     }
-    public void load(){
-        if(times < 2){
-            new Handler().postDelayed(new Runnable(){
+
+    public void load() {
+        if (times < 2) {
+            new Handler().postDelayed(new Runnable() {
                 public void run() {
                     mRecyclerView.loadMoreComplete();
-                    for(int i = 0; i < 20 ;i++){
-                        listData.add("item" + (i + listData.size()) );
+                    for (int i = 0; i < 20; i++) {
+                        listData.add("item" + (i + listData.size()));
                     }
                     mAdapter.notifyDataSetChanged();
                     mRecyclerView.refreshComplete();
@@ -159,7 +160,7 @@ public class customListView extends AppCompatActivity {
                 }
             }, 1000);
         }
-        times ++;
+        times++;
     }
 
 }

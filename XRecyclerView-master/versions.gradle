@@ -1,0 +1,32 @@
+/**
+ * Shared file between builds so that they can all use the same dependencies and
+ * maven repositories.
+ **/
+ext.deps = [:]
+ext.support_version = '23.1.1'
+ext.kotlin_version = '1.3.0'
+ext.anko_version = '0.8.2'
+ext.butterknife_version = '8.8.1'
+
+def build_versions = [:]
+build_versions.min_sdk = 16
+build_versions.target_sdk = 28
+build_versions.build_tools = "28.0.3"
+ext.build_versions = build_versions
+
+def versions = [:]
+versions.support = "28.0.0"
+
+def support = [:]
+support.app_compat= "com.android.support:appcompat-v7:$versions.support"
+support.design = "com.android.support:design:$versions.support"
+support.recyclerview = "com.android.support:recyclerview-v7:+"
+
+ext.support = support
+
+def alibaba = [:]
+alibaba.arouter_compiler = "com.alibaba:arouter-compiler:1.1.4"
+alibaba.arouter_api = "com.alibaba:arouter-api:1.3.1"
+ext.alibaba = alibaba
+
+

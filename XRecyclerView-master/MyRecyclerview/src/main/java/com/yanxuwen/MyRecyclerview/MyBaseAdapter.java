@@ -28,11 +28,11 @@ import java.util.Map;
  */
 public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHolder> {
     boolean horizontal = false;
-    boolean isAnimate=true;
+    boolean isAnimate = true;
     public static int NOOPENID = -1;
     private Context mContext;
     private List<?> mDataSet;
-    private Map<Integer,Boolean> map_animate;
+    private Map<Integer, Boolean> map_animate;
     View view_swipe = null;
     public static BaseViewHolder swipe_holder;
     public BaseViewHolder expand_holder;
@@ -57,8 +57,9 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
     public MyBaseAdapter(Context context, List<?> dataSet) {
         mContext = context;
         mDataSet = dataSet;
-        map_animate=new HashMap<>();
+        map_animate = new HashMap<>();
     }
+
     /**
      * 如果是使用系统的RecyclerView,一定要调用该句
      */
@@ -95,14 +96,20 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
         return horizontal;
     }
 
-    private boolean isAnimate(){return  isAnimate;}
-    public void setIsAnimate(boolean isAnimate){this.isAnimate=isAnimate;}
+    private boolean isAnimate() {
+        return isAnimate;
+    }
+
+    public void setIsAnimate(boolean isAnimate) {
+        this.isAnimate = isAnimate;
+    }
 
     public MyRecyclerView getMyRecyclerView() {
         return mMyRecyclerView;
     }
+
     public RecyclerView getRecyclerView() {
-        if(mMyRecyclerView!=null)return mMyRecyclerView;
+        if (mMyRecyclerView != null) return mMyRecyclerView;
         return mRecyclerView;
     }
 
@@ -122,7 +129,6 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
     public void setHeaderViewsCount(int mHeaderViewsCount) {
         this.mHeaderViewsCount = mHeaderViewsCount;
     }
-
 
 
     /**
@@ -226,8 +232,8 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
 
                     @Override
                     public void onClose(SwipeLayout swipeLayout) {
-                        MySwipeLayout.isIntercept=false;
-                        MyBaseAdapter.swipe_holder=null;
+                        MySwipeLayout.isIntercept = false;
+                        MyBaseAdapter.swipe_holder = null;
 
                     }
 
@@ -239,7 +245,7 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
                     @Override
                     public void onOpen(SwipeLayout swipeLayout) {
                         swipe_holder = holder;
-                        MySwipeLayout.isIntercept=true;
+                        MySwipeLayout.isIntercept = true;
                     }
 
                     @Override
@@ -261,14 +267,15 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
                 holder.getExpandView().collapse(false);
             }
         }
-        if(map_animate.size()>mDataSet.size()){
+        int dataSize = mDataSet != null ? mDataSet.size() : 0;
+        if (map_animate.size() > dataSize) {
             map_animate.clear();
         }
         //显示动画
-        if (isAnimate&&(map_animate.get(adapterPosition)==null||!map_animate.get(adapterPosition))) {
+        if (isAnimate && (map_animate.get(adapterPosition) == null || !map_animate.get(adapterPosition))) {
             holder.itemView.setTag(true);
-            if(!map_animate.containsKey(adapterPosition)){
-                map_animate.put(adapterPosition,true);
+            if (!map_animate.containsKey(adapterPosition)) {
+                map_animate.put(adapterPosition, true);
             }
             for (Animator anim : getAnimators(holder.itemView)) {
                 //设置标签已经设置过动画了，避免2个动画
@@ -400,12 +407,14 @@ public class MyBaseAdapter extends RecyclerView.Adapter<MyBaseAdapter.BaseViewHo
         public MySwipeLayout getSwipeLayout() {
             return swipe;
         }
+
         /**
          * 获取滑动出来试图，如删除视图
          */
         public View getSwipeView() {
             return swipe.getChildAt(0);
         }
+
         /**
          * @return 获取主布局，也就是我们通常显示的布局，没有展开跟没有菜单
          */

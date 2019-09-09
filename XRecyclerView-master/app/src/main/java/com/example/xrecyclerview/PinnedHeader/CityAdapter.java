@@ -12,9 +12,6 @@ import com.yanxuwen.MyRecyclerview.MyBaseAdapter;
 
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 
 /**
  * Created by zhangxutong .
@@ -66,15 +63,14 @@ public class CityAdapter extends MyBaseAdapter {
     }
 
     class ViewHolder extends BaseViewHolder {
-        @Bind(R.id.tvCity)
         TextView tvCity;
-        @Bind(R.id.ivAvatar)
         ImageView avatar;
-        @Bind(R.id.content)
         View content;
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            tvCity = itemView.findViewById(R.id.tvCity);
+            avatar = itemView.findViewById(R.id.ivAvatar);
+            content = itemView.findViewById(R.id.content);
         }
     }
 }
